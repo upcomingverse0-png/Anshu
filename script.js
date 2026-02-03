@@ -1,52 +1,57 @@
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const question = document.getElementById("question");
-
-// NAME FROM URL
-const params = new URLSearchParams(window.location.search);
-const name = params.get("name");
-
-if (name) {
-  question.innerText = `${name}, will you be my Valentine?`;
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Arial', sans-serif;
 }
 
-// NO button runs away
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 200 - 100;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
+.card {
+  background: #fff;
+  padding: 35px 25px;
+  width: 320px;
+  text-align: center;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  animation: pop 0.8s ease;
+}
 
-// YES CLICK – ALL MESSAGES
-yesBtn.addEventListener("click", () => {
-  document.querySelector(".buttons").style.display = "none";
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 
-  const messages = [
-    "🥰 Hehe… mujhe pata tha tum hamesha YES hi kahogi ❤️",
+.emoji {
+  font-size: 48px;
+}
 
-    "💞 Tum sirf meri Valentine nahi ho…",
+h2 {
+  margin: 20px 0;
+  color: #333;
+  line-height: 1.4;
+}
 
-    "🌍 Tum meri har khushi, har sukoon aur har dua ho",
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
 
-    "🥹 Tumhare saath zindagi aur bhi khoobsurat lagti hai",
+button {
+  padding: 10px 26px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    "❤️ I’m really lucky to have you",
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
 
-    "🌹my love 🌹"
-
-    "💖 Happy Valentine In Advance 
-                  Meri Jaan Anshu💖"
-  ];
-
-  let index = 0;
-  question.innerHTML = messages[index];
-
-  const interval = setInterval(() => {
-    index++;
-    if (index < messages.length) {
-      question.innerHTML = messages[index];
-    } else {
-      clearInterval(interval);
-    }
-  }, 2000); // har 2 second me message change
-});
+#noBtn {
+  background: #ddd;
+}
