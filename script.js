@@ -1,43 +1,93 @@
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const question = document.getElementById("question");
+const music = document.getElementById("loveMusic");
 
-// NAME FROM URL
+// Name from URL
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
 
 if (name) {
-  question.innerText = `${name}, Anshu Ji ❤️ will you be my Valentine? ❤️`;
+  question.innerText = `${name}, will you be my Valentine? ❤️`;
 }
 
-// NO button runs away
-// NO button behaviour
+// NO button – cute response
 noBtn.addEventListener("click", () => {
-  question.innerHTML = "🥺 Aise NO mat bolo na…<br>tum meri favourite ho ❤️";
+  question.innerHTML =
+    "🥺 Aise NO mat bolo na…<br><br>tum meri favourite ho ❤️";
 });
 
-// YES CLICK – GF SPECIAL FLOW
+// YES button – full magic
 yesBtn.addEventListener("click", () => {
+  // music
+  music.play().catch(() => {});
+
+  // night + reel mode
+  document.body.classList.add("night", "reel");
+
+  // hide buttons
   document.querySelector(".buttons").style.display = "none";
+
+  // confetti + hearts
+  launchConfetti();
+  popHearts();
 
   const messages = [
     "🥰 Hehe… mujhe pata tha tum hamesha YES hi kahogi ❤️",
     "💞 Tum sirf meri Valentine nahi ho…",
-    "🌍 Tum meri har khushi, har sukoon aur har dua ho",
-    "🥹 Tumhare saath zindagi aur bhi khoobsurat lagti hai",
+    "🌍 Tum meri zindagi ka sabse khoobsurat hissa ho",
+    "🥹 Tumhare saath har din special lagta hai",
     "❤️ I’m really lucky to have you",
-    "🌹 Happy Valentine in advance, meri jaan Anshu 🌹"
+    "🌹 Happy Valentine, my love 🌹"
   ];
 
-  let index = 0;
-  question.innerHTML = messages[index];
+  let i = 0;
+  question.innerHTML = messages[i];
 
   const interval = setInterval(() => {
-    index++;
-    if (index < messages.length) {
-      question.innerHTML = messages[index];
+    i++;
+    if (i < messages.length) {
+      question.innerHTML = messages[i];
     } else {
       clearInterval(interval);
     }
-  }, 2000);
+  }, 2200);
 });
+
+// helpers
+function launchConfetti() {
+  const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4cc9f0"];
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3500);
+  }
+}
+
+function popHearts() {
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "💖";
+    h.style.left = 20 + Math.random() * 60 + "vw";
+    h.style.bottom = "120px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 3000);
+  }
+}
+/* Screenshot button */
+#shotBtn{
+  position:fixed; right:16px; bottom:16px;
+  padding:12px 16px; border-radius:24px;
+  border:none; background:#ff4d6d; color:#fff;
+  font-size:14px; z-index:10; display:none;
+}
+
+/* Forever ending */
+.forever{
+  font-size:22px; line-height:1.6;
+}
