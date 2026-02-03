@@ -7,7 +7,7 @@ const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
 
 if (name) {
-  question.innerText = `${name}, will you be my Valentine? ❤️`;
+  question.innerText = `${name}, Anshu Ji ❤️ will you be my Valentine? ❤️`;
 }
 
 // NO button runs away
