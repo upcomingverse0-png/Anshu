@@ -1,79 +1,104 @@
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffd1dc);
-  background-size: 400% 400%;
-  animation: gradientMove 10s ease infinite;
-  font-family: 'Arial', sans-serif;
-  overflow: hidden;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const question = document.getElementById("question");
+const music = document.getElementById("loveMusic");
+
+// Name from URL
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name");
+
+if (name) {
+  question.innerText = `${name}, will you be my Valentine? ❤️`;
 }
 
-/* animated gradient */
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+// NO button – cute response
+noBtn.addEventListener("click", () => {
+  question.innerHTML =
+    "🥺 Aise NO mat bolo na…<br><br>tum meri favourite ho ❤️";
+});
+
+// YES button – full magic
+yesBtn.addEventListener("click", () => {
+  // music
+  music.play().catch(() => {});
+
+  // night + reel mode
+  document.body.classList.add("night", "reel");
+
+  // hide buttons
+  document.querySelector(".buttons").style.display = "none";
+
+  // confetti + hearts
+  launchConfetti();
+  popHearts();
+
+  const messages = [
+    "🥰 Hehe… mujhe pata tha tum hamesha YES hi kahogi ❤️",
+    "💞 Tum sirf meri Valentine nahi ho…",
+    "🌍 Tum meri zindagi ka sabse khoobsurat hissa ho",
+    "🥹 Tumhare saath har din special lagta hai",
+    "❤️ I’m really lucky to have you",
+    "🌹 Happy Valentine, my love 🌹"
+  ];
+
+  let i = 0;
+  question.innerHTML = messages[i];
+
+  const interval = setInterval(() => {
+    i++;
+    if (i < messages.length) {
+      question.innerHTML = messages[i];
+    } else {
+      clearInterval(interval);
+    }
+  }, 2200);
+});
+
+// helpers
+function launchConfetti() {
+  const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4cc9f0"];
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3500);
+  }
 }
 
-/* floating hearts */
-body::before {
-  content: "💖 💕 💗 💘 💝";
-  position: absolute;
-  top: -10%;
-  width: 100%;
-  text-align: center;
-  font-size: 40px;
-  opacity: 0.15;
-  animation: floatHearts 8s linear infinite;
+function popHearts() {
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "💖";
+    h.style.left = 20 + Math.random() * 60 + "vw";
+    h.style.bottom = "120px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 3000);
+  }
+  }
+  // PASSWORD (change it to something only she knows)
+function unlock(){
+  const pass = document.getElementById("pwd").value;
+  if(pass === "you"){     // ← password change kar sakte ho
+    document.getElementById("lock").style.display="none";
+  } else {
+    document.getElementById("err").style.display="block";
+  }
 }
 
-@keyframes floatHearts {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(120vh); }
-}
+// Screenshot (mobile-safe)
+const shotBtn = document.createElement("button");
+shotBtn.id = "shotBtn";
+shotBtn.innerText = "📸 Save Memory";
+document.body.appendChild(shotBtn);
+shotBtn.onclick = () => window.print();
 
-.card {
-  background: white;
-  padding: 35px 25px;
-  width: 320px;
-  text-align: center;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-  z-index: 2;
-}
-
-.emoji {
-  font-size: 48px;
-}
-
-h2 {
-  margin: 20px 0;
-  color: #333;
-  line-height: 1.4;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 25px;
-}
-
-button {
-  padding: 10px 26px;
-  border-radius: 25px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#yesBtn {
-  background: #ff4d6d;
-  color: white;
-}
-
-#noBtn {
-  background: #ddd;
-}
+// After YES flow ends → Forever ending + show screenshot btn
+function showForever(){
+  question.classList.add("forever");
+  question.innerHTML = "💍 Forever Together<br><br>Always you. Always us. ❤️";
+  document.getElementById("shotBtn").style.display="block";
+    }
