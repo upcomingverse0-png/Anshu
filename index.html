@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Valentine ❤️</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body><div id="lock" style="
+position:fixed; inset:0; background:#000;
+display:flex; align-items:center; justify-content:center; z-index:9999;">
+  <div style="background:#fff; padding:22px; border-radius:18px; width:86%; max-width:320px; text-align:center;">
+    <h3 style="margin:0 0 12px;">💌 Private Page</h3>
+    <input id="pwd" type="password" placeholder="Enter special word"
+      style="width:100%; padding:12px; border-radius:12px; border:1px solid #ddd; font-size:16px;">
+    <button onclick="unlock()"
+      style="margin-top:12px; width:100%; padding:12px; border-radius:22px; border:none; background:#ff4d6d; color:#fff; font-size:16px;">
+      Unlock ❤️
+    </button>
+    <p id="err" style="color:#ff4d6d; margin:10px 0 0; display:none;">Wrong password 😅</p>
+  </div>
+</div>
 
   <div class="card">
     <div class="emoji">❤️🥰</div>
@@ -19,6 +33,11 @@
       <button id="noBtn">No</button>
     </div>
   </div>
+
+  <!-- Romantic Music (tap-to-play) -->
+  <audio id="loveMusic" preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5e8e9b9d8c.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>
