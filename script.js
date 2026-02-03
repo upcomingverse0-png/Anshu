@@ -11,10 +11,9 @@ if (name) {
 }
 
 // NO button runs away
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 200 - 100;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+// NO button behaviour
+noBtn.addEventListener("click", () => {
+  question.innerHTML = "🥺 Aise NO mat bolo na…<br>tum meri favourite ho ❤️";
 });
 
 // YES CLICK – GF SPECIAL FLOW
