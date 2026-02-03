@@ -1,57 +1,44 @@
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  font-family: 'Arial', sans-serif;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const question = document.getElementById("question");
+
+// NAME FROM URL
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name");
+
+if (name) {
+  question.innerText = `${name}, will you be my Valentine? ❤️`;
 }
 
-.card {
-  background: #fff;
-  padding: 35px 25px;
-  width: 320px;
-  text-align: center;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-  animation: pop 0.8s ease;
-}
+// NO button runs away
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
 
-@keyframes pop {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
+// YES CLICK – GF SPECIAL FLOW
+yesBtn.addEventListener("click", () => {
+  document.querySelector(".buttons").style.display = "none";
 
-.emoji {
-  font-size: 48px;
-}
+  const messages = [
+    "🥰 Hehe… mujhe pata tha tum hamesha YES hi kahogi ❤️",
+    "💞 Tum sirf meri Valentine nahi ho…",
+    "🌍 Tum meri har khushi, har sukoon aur har dua ho",
+    "🥹 Tumhare saath zindagi aur bhi khoobsurat lagti hai",
+    "❤️ I’m really lucky to have you",
+    "🌹 Happy Valentine in advance, meri jaan Anshu 🌹"
+  ];
 
-h2 {
-  margin: 20px 0;
-  color: #333;
-  line-height: 1.4;
-}
+  let index = 0;
+  question.innerHTML = messages[index];
 
-.buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 25px;
-}
-
-button {
-  padding: 10px 26px;
-  border-radius: 25px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#yesBtn {
-  background: #ff4d6d;
-  color: white;
-}
-
-#noBtn {
-  background: #ddd;
-}
+  const interval = setInterval(() => {
+    index++;
+    if (index < messages.length) {
+      question.innerHTML = messages[index];
+    } else {
+      clearInterval(interval);
+    }
+  }, 2000);
+});
