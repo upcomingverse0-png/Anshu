@@ -6,6 +6,7 @@ const music = document.getElementById("loveMusic");
 // Name from URL
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
+
 if (name) {
   question.innerText = `${name}, will you be my Valentine? ❤️`;
 }
@@ -18,10 +19,16 @@ noBtn.addEventListener("click", () => {
 
 // YES button – full magic
 yesBtn.addEventListener("click", () => {
-  music.play().catch(()=>{});
-  document.body.classList.add("night","reel");
+  // music
+  music.play().catch(() => {});
+
+  // night + reel mode
+  document.body.classList.add("night", "reel");
+
+  // hide buttons
   document.querySelector(".buttons").style.display = "none";
 
+  // confetti + hearts
   launchConfetti();
   popHearts();
 
@@ -31,7 +38,7 @@ yesBtn.addEventListener("click", () => {
     "🌍 Tum meri zindagi ka sabse khoobsurat hissa ho",
     "🥹 Tumhare saath har din special lagta hai",
     "❤️ I’m really lucky to have you",
-    "💍 Forever Together<br><br>Always you. Always us. ❤️"
+    "🌹 Happy Valentine, my love 🌹"
   ];
 
   let i = 0;
@@ -43,12 +50,11 @@ yesBtn.addEventListener("click", () => {
       question.innerHTML = messages[i];
     } else {
       clearInterval(interval);
-      document.getElementById("shotBtn").style.display="block";
     }
   }, 2200);
 });
 
-// CONFETTI
+// helpers
 function launchConfetti() {
   const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4cc9f0"];
   for (let i = 0; i < 40; i++) {
@@ -62,7 +68,6 @@ function launchConfetti() {
   }
 }
 
-// HEARTS
 function popHearts() {
   for (let i = 0; i < 8; i++) {
     const h = document.createElement("div");
@@ -74,20 +79,3 @@ function popHearts() {
     setTimeout(() => h.remove(), 3000);
   }
 }
-
-// PASSWORD
-function unlock(){
-  const pass = document.getElementById("pwd").value;
-  if(pass === "you"){   // ← password yahin change karo
-    document.getElementById("lock").style.display="none";
-  } else {
-    document.getElementById("err").style.display="block";
-  }
-}
-
-// Screenshot
-const shotBtn = document.createElement("button");
-shotBtn.id = "shotBtn";
-shotBtn.innerText = "📸 Save Memory";
-document.body.appendChild(shotBtn);
-shotBtn.onclick = () => window.print();
