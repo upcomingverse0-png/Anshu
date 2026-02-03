@@ -18,7 +18,8 @@ noBtn.addEventListener("click", () => {
 });
 
 // YES button – full magic
-yesBtn.addEventListener("click", () => {
+yesBtn.addEventListener("click", () => {document.getElementById("loveSong").src =
+  "https://www.youtube.com/embed/9yR0t2N6wRQ?autoplay=1&loop=1&playlist=9yR0t2N6wRQ";
   // music
   music.play().catch(() => {});
 
