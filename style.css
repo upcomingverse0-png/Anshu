@@ -1,104 +1,144 @@
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const question = document.getElementById("question");
-const music = document.getElementById("loveMusic");
-
-// Name from URL
-const params = new URLSearchParams(window.location.search);
-const name = params.get("name");
-
-if (name) {
-  question.innerText = `${name}, will you be my Valentine? ❤️`;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-// NO button – cute response
-noBtn.addEventListener("click", () => {
-  question.innerHTML =
-    "🥺 Aise NO mat bolo na…<br><br>tum meri favourite ho ❤️";
-});
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6a88, #ff99ac, #ffd1dc);
+  background-size: 300% 300%;
+  animation: bgMove 8s ease infinite;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
 
-// YES button – full magic
-yesBtn.addEventListener("click", () => {
-  // music
-  music.play().catch(() => {});
+/* moving background */
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  // night + reel mode
-  document.body.classList.add("night", "reel");
+/* floating hearts */
+body::before {
+  content: "💖 💕 💗 💘 💝";
+  position: absolute;
+  top: -15%;
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  opacity: 0.18;
+  animation: floatHearts 9s linear infinite;
+}
 
-  // hide buttons
-  document.querySelector(".buttons").style.display = "none";
+@keyframes floatHearts {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(120vh); }
+}
 
-  // confetti + hearts
-  launchConfetti();
-  popHearts();
+.card {
+  width: 92%;
+  max-width: 360px;
+  background: #ffffff;
+  padding: 28px 22px 32px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+  z-index: 2;
+}
 
-  const messages = [
-    "🥰 Hehe… mujhe pata tha tum hamesha YES hi kahogi ❤️",
-    "💞 Tum sirf meri Valentine nahi ho…",
-    "🌍 Tum meri zindagi ka sabse khoobsurat hissa ho",
-    "🥹 Tumhare saath har din special lagta hai",
-    "❤️ I’m really lucky to have you",
-    "🌹 Happy Valentine, my love 🌹"
-  ];
+.emoji {
+  font-size: 46px;
+}
 
-  let i = 0;
-  question.innerHTML = messages[i];
+h2 {
+  margin: 18px 0 22px;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #333;
+}
 
-  const interval = setInterval(() => {
-    i++;
-    if (i < messages.length) {
-      question.innerHTML = messages[i];
-    } else {
-      clearInterval(interval);
-    }
-  }, 2200);
-});
+.buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
 
-// helpers
-function launchConfetti() {
-  const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4cc9f0"];
-  for (let i = 0; i < 40; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-    c.style.animationDuration = 2 + Math.random() * 2 + "s";
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 3500);
+button {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: #fff;
+}
+
+#noBtn {
+  background: #f0f0f0;
+  color: #444;
+}
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 12px;
+  opacity: 0.9;
+  animation: fall 3s linear forwards;
+  z-index: 5;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
   }
 }
 
-function popHearts() {
-  for (let i = 0; i < 8; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerText = "💖";
-    h.style.left = 20 + Math.random() * 60 + "vw";
-    h.style.bottom = "120px";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 3000);
-  }
-  }
-  // PASSWORD (change it to something only she knows)
-function unlock(){
-  const pass = document.getElementById("pwd").value;
-  if(pass === "you"){     // ← password change kar sakte ho
-    document.getElementById("lock").style.display="none";
-  } else {
-    document.getElementById("err").style.display="block";
-  }
+/* FLOATING HEARTS */
+.heart {
+  position: fixed;
+  font-size: 22px;
+  animation: floatUp 3s ease-out forwards;
+  z-index: 6;
 }
 
-// Screenshot (mobile-safe)
-const shotBtn = document.createElement("button");
-shotBtn.id = "shotBtn";
-shotBtn.innerText = "📸 Save Memory";
-document.body.appendChild(shotBtn);
-shotBtn.onclick = () => window.print();
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120px); opacity: 0; }
+}
 
-// After YES flow ends → Forever ending + show screenshot btn
-function showForever(){
-  question.classList.add("forever");
-  question.innerHTML = "💍 Forever Together<br><br>Always you. Always us. ❤️";
-  document.getElementById("shotBtn").style.display="block";
-    }
+/* NIGHT MODE */
+.night {
+  background: radial-gradient(circle at top, #2b1055, #000);
+}
+
+.night .card {
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 0 60px rgba(255,105,135,0.6);
+}
+
+/* REEL MODE */
+.reel h2 {
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+.reel .emoji {
+  font-size: 52px;
+}
+
+.reel .buttons {
+  display: none;
+}
